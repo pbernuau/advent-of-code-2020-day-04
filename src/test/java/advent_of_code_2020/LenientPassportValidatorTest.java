@@ -11,23 +11,23 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PassportValidatorTest {
+class LenientPassportValidatorTest {
 
-    PassportValidator validator = new PassportValidator();
+    LenientPassportValidator validator;
 
     @BeforeEach
     void setUp() {
-        validator = new PassportValidator();
+        validator = new LenientPassportValidator();
     }
 
     @ParameterizedTest
     @MethodSource("provideTestParameters")
     void test_isValid(Passport passport, boolean valid) {
-        assertThat(validator.isValid(passport)).isEqualTo(valid);
+        assertThat(validator.test(passport)).isEqualTo(valid);
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    private static Stream<Arguments> provideTestParameters() throws IOException {
+    static Stream<Arguments> provideTestParameters() throws IOException {
         String input = "" +
                 "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm\n\n" +
                 "iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884 hcl:#cfa07d byr:1929\n\n" +

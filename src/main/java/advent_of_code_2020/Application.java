@@ -23,13 +23,19 @@ public class Application {
             e.printStackTrace();
         }
 
-        PassportValidator validator = new PassportValidator();
-        long numberOfValidPassport = passports.stream()
-                .filter(validator::isValid)
-                .count();
+        System.out.format("There are %s / %s lenient valid passports.\n",
+                countValidPassports(passports, new LenientPassportValidator()),
+                passports.size());
 
-        System.out.format("There are %s / %s valid passports.\n", numberOfValidPassport, passports.size());
+        System.out.format("There are %s / %s lenient valid passports.\n",
+                countValidPassports(passports, new StrictPassportValidator()),
+                passports.size());
     }
 
+    private static long countValidPassports(List<Passport> passports, PassportValidator validator) {
+        return passports.stream()
+                .filter(validator)
+                .count();
+    }
 
 }
